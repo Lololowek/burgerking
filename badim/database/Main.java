@@ -6,15 +6,14 @@ public class Main {
     public static void main(String[] args){
         DBC dbc = new DBC();
 
-        String query = "INSERT INTO data (login,password) login,password";
-        String query1 = "select * from data";
+        String query = "select * from data";
         try {
             Statement statement = dbc.getConnection().createStatement();
-            statement.executeQuery(query);
-            ResultSet resultSet1 = statement.executeQuery(query1);
+            ResultSet resultSet = statement.executeQuery(query);
 
-            while (resultSet1.next()){
-                resultSet1.getInt(1);
+            while (resultSet.next()){
+                int id = resultSet.getInt(1);
+                System.out.print(id);
             }
         }
         catch (SQLException e) {
