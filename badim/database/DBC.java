@@ -6,11 +6,14 @@ public class DBC {
     private final String NAME = "nadim";
     private final String PASSWORD = "root";
 
+
+
     private Connection connection;
 
     public DBC(){
         try{
             connection = DriverManager.getConnection(HOST, NAME, PASSWORD);
+
         }
         catch (SQLException e){
             e.printStackTrace();
