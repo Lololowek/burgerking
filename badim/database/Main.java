@@ -1,5 +1,5 @@
 package badim.database;
-
+import badim.database.functions.*;
 import badim.database.verification.*;
 import java.util.Scanner;
 
@@ -24,6 +24,21 @@ public class Main {
                     break;
             }
         }
-
+        System.out.print("Личный кабинет\n");
+        System.out.print("1) На очереди\n");
+        System.out.print("2) Просмотренно\n");
+        System.out.print("3) Смотреть\n");
+        int choice = scanner.nextInt();
+        switch(choice){
+            case 1:
+                new wishlist().Wish(scanner);
+                break;
+            case 2:
+                new watched().Watched(scanner);
+                break;
+            case 3:
+                new library().Lib(scanner);
+                break;
+        }
     }
 }
