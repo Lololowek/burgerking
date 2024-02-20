@@ -20,9 +20,10 @@ public class Main {
                     new VerificationLogin().LoginProcess(scanner);
                     break;
                 case 2:
-                   new VerificationReg().RegProcess(scanner);
-                   break;
+                    new VerificationReg().RegProcess(scanner);
+                    break;
             }
         }
+
     }
 }
