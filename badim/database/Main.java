@@ -4,10 +4,11 @@ import badim.database.verification.*;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean coconut;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        DBC dbc = new DBC();
-        boolean coconut = true;
+        coconut = true;
         while (coconut) {
             System.out.print("Добро пожаловать!\n");
             System.out.print("1) Войти\n");
@@ -20,6 +21,7 @@ public class Main {
                     break;
                 case 2:
                    new VerificationReg().RegProcess(scanner);
+                   break;
             }
         }
     }

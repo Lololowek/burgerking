@@ -1,11 +1,8 @@
 package badim.database.verification;
 
-import badim.database.DBC;
-import badim.database.User;
-
+import badim.database.*;
 import java.sql.*;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class VerificationLogin {
     public void LoginProcess(Scanner scanner){
@@ -45,6 +42,7 @@ public class VerificationLogin {
                         System.out.println(users);
                     }
                 } catch (SQLException e) {throw new RuntimeException(e);}}
+            Main.coconut = false;
         }
         else {System.out.print("Неверные данные либо ваш аккаунт не существует");}
     }

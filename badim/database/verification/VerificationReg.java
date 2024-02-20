@@ -1,21 +1,17 @@
 package badim.database.verification;
 
-import badim.database.DBC;
-import badim.database.User;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import badim.database.*;
+import java.sql.*;
+import java.util.*;
 
 public class VerificationReg {
     User user = new User();
     DBC dbc = new DBC();
     public void RegProcess(Scanner scanner) {
         scanner.nextLine();
-        System.out.println("Логин: ");
+        System.out.print("Логин:\n ");
         String Login = scanner.nextLine();
-        System.out.println("Пароль: ");
+        System.out.print("Пароль:\n ");
         String Password = scanner.nextLine();
         boolean isUserExist = false;
         try (PreparedStatement ps = dbc.getConnection().prepareStatement("select 1 from users where login = ? and password=?")) {
@@ -39,9 +35,11 @@ public class VerificationReg {
                 preparedStatement.setString(2, Password);
                 int affectedRows = preparedStatement.executeUpdate();
                 System.out.println("Аккаунт создан.");
-            } catch (SQLException e) {
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
             }
+            Main.coconut = false;
         }
     }
 }
