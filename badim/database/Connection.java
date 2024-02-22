@@ -1,16 +1,16 @@
 package badim.database;
 import java.sql.*;
 
-public class DBC {
+public class Connection {
     private final String HOST = "jdbc:mysql://localhost:3306/autorization";
     private final String NAME = "nadim";
     private final String PASSWORD = "root";
 
 
 
-    private Connection connection;
+    private java.sql.Connection connection;
 
-    public DBC(){
+    public Connection(){
         try{
             connection = DriverManager.getConnection(HOST, NAME, PASSWORD);
 
@@ -20,7 +20,7 @@ public class DBC {
         }
     }
 
-    public Connection getConnection() {
+    public java.sql.Connection getConnection() {
         return connection;
     }
 }

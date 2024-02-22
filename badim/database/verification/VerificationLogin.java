@@ -1,20 +1,22 @@
 package badim.database.verification;
 
 import badim.database.*;
+import badim.database.Connection;
+
 import java.sql.*;
 import java.util.*;
 
 public class VerificationLogin {
     public void LoginProcess(Scanner scanner){
         scanner.nextLine();
-        DBC dbc = new DBC();
+        Connection connection = new Connection();
         User user = new User();
         System.out.print("Логин:\n ");
         String login = scanner.nextLine();
         System.out.print("Пароль:\n ");
         String password = scanner.nextLine();
         boolean isUserExists = false;
-        try (PreparedStatement ps = dbc.getConnection().prepareStatement("select 1 from users where login = ? and password=?")) {
+        try (PreparedStatement ps = connection.getConnection().prepareStatement("select 1 from users where login = ? and password=?")) {
             ps.setString(1, login);
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
@@ -32,7 +34,7 @@ public class VerificationLogin {
             if ((Objects.equals(log, "admin")) & (Objects.equals(pas, "admin"))) {
                 String query = "select * from users";
                 try {
-                    Statement statement = dbc.getConnection().createStatement();
+                    Statement statement = connection.getConnection().createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
                     while (resultSet.next()) {
                         User users = new User();

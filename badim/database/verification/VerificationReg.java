@@ -1,11 +1,13 @@
 package badim.database.verification;
 
 import badim.database.*;
+import badim.database.Connection;
+
 import java.sql.*;
 import java.util.*;
 
 public class VerificationReg {
-    DBC dbc = new DBC();
+    Connection connection = new Connection();
     public void RegProcess(Scanner scanner) {
         scanner.nextLine();
         System.out.print("Логин:\n ");
@@ -13,7 +15,7 @@ public class VerificationReg {
         System.out.print("Пароль:\n ");
         String Password = scanner.nextLine();
         boolean isUserExist = false;
-        try (PreparedStatement ps = dbc.getConnection().prepareStatement("select 1 from users where login = ?")) {
+        try (PreparedStatement ps = connection.getConnection().prepareStatement("select 1 from users where login = ?")) {
             ps.setString(1, Login);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -26,13 +28,13 @@ public class VerificationReg {
         if (isUserExist) {
             System.out.print("Аккаунт с таким логином уже существует\n");
         } else {
-            try (PreparedStatement preparedStatement = dbc.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)")) {
+            try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)")) {
                 preparedStatement.setString(1, Login);
                 preparedStatement.setString(2, Password);
                 System.out.println("Аккаунт создан.");
             }
             catch (SQLException e) {
-                e.printStackTrace();
+                e.getSQLState();
                 System.out.print("чета не то");
             }
             Main.coconut = false;
