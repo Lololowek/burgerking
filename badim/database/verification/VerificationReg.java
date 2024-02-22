@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.*;
 
 public class VerificationReg {
-    User user = new User();
     DBC dbc = new DBC();
     public void RegProcess(Scanner scanner) {
         scanner.nextLine();
@@ -21,21 +20,20 @@ public class VerificationReg {
                     isUserExist = true;
                 }
             }
-        } catch (
-                SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            System.out.print("чета не то");
         }
         if (isUserExist) {
             System.out.print("Аккаунт с таким логином уже существует\n");
         } else {
-            String query = "INSERT INTO users (login, password) VALUES (?, ?)";
-            try (PreparedStatement preparedStatement = dbc.getConnection().prepareStatement(query)) {
+            try (PreparedStatement preparedStatement = dbc.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)")) {
                 preparedStatement.setString(1, Login);
                 preparedStatement.setString(2, Password);
                 System.out.println("Аккаунт создан.");
             }
             catch (SQLException e) {
                 e.printStackTrace();
+                System.out.print("чета не то");
             }
             Main.coconut = false;
         }

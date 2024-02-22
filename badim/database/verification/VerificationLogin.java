@@ -44,6 +44,6 @@ public class VerificationLogin {
                 } catch (SQLException e) {throw new RuntimeException(e);}}
             Main.coconut = false;
         }
-        else {System.out.print("Неверные данные либо ваш аккаунт не существует");}
+        else {System.out.print("Неверные данные либо ваш аккаунт не существует\n");}
     }
 }

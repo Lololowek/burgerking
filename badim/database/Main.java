@@ -1,12 +1,14 @@
 package badim.database;
 import badim.database.functions.*;
 import badim.database.verification.*;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
     public static boolean coconut;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         coconut = true;
         while (coconut) {
