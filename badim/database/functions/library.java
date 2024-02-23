@@ -10,10 +10,10 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class library {
-    private static boolean lib;
+
     public void Lib(Scanner scanner) throws SQLException {
         scanner.nextLine();
-        lib = true;
+        boolean lib = true;
         int fid;
         while(lib){
             Connection connection = new Connection();

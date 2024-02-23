@@ -7,10 +7,9 @@ import java.util.Scanner;
 import java.sql.*;
 
 public class wishlist {
-    private static boolean wishl;
     public void Wish(Scanner scanner) throws SQLException {
+        boolean wishl = true;
         scanner.nextLine();
-        wishl = true;
         int fid;
         while(wishl){
         Connection connection = new Connection();
@@ -92,11 +91,6 @@ public class wishlist {
             preparedStatement.setInt(1, fid);
             preparedStatement.setInt(2, Main.token);
             int affectedRows = preparedStatement.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Фильм с ID " + fid + " успешно удален.");
-            } else {
-                System.out.println("Фильм с ID " + fid + " не найден.");
-            }
         }
     }
 }

@@ -10,11 +10,10 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class watched {
-    private static boolean watch;
     private static boolean manya;
     public void Watch(Scanner scanner) throws SQLException {
+        boolean watch = true;
         scanner.nextLine();
-        watch = true;
         int fid;
         while(watch){
             manya = false;
@@ -86,9 +85,7 @@ public class watched {
             ps.setInt(5, Main.token);
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Книга успешно добавлена.");
-            } else {
-                System.out.println("Не удалось добавить книгу.");
+                System.out.println("Фильм успешно добавлен.");
             }
         }
         catch (SQLException e) {
