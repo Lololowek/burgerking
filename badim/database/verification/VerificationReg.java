@@ -22,7 +22,8 @@ public class VerificationReg {
                     isUserExist = true;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.out.print("чета не то");
         }
         if (isUserExist) {
