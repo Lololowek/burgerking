@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     public static boolean coconut;
+    public static int token;
 
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);

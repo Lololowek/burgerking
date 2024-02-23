@@ -7,35 +7,38 @@ import java.sql.*;
 import java.util.*;
 
 public class VerificationLogin {
-    public void LoginProcess(Scanner scanner){
+    private String Login;
+    private String Password;
+    public void LoginProcess(Scanner scanner) {
         scanner.nextLine();
         Connection connection = new Connection();
         User user = new User();
         System.out.print("Логин:\n ");
-        String login = scanner.nextLine();
+        this.Login = scanner.nextLine();
         System.out.print("Пароль:\n ");
-        String password = scanner.nextLine();
+        this.Password = scanner.nextLine();
         boolean isUserExists = false;
         try (PreparedStatement ps = connection.getConnection().prepareStatement("select 1 from users where login = ? and password=?")) {
-            ps.setString(1, login);
-            ps.setString(2, password);
+            ps.setString(1, Login);
+            ps.setString(2, Password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     isUserExists = true;
-                    user.setPassword(password);
-                    user.setLogin(login);
+                    user.setPassword(Password);
+                    user.setLogin(Login);
+                    Main.token = rs.getInt(1) ;
                 }
             }
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (isUserExists) {
             System.out.println("ВХОД ВЫПОЛНЕН!");
-            String log = user.getLogin();
-            String pas = user.getPassword();
-            if ((Objects.equals(log, "admin")) & (Objects.equals(pas, "admin"))) {
-                String query = "select * from users";
+            if ((Objects.equals(Login, "admin")) & (Objects.equals(Password, "admin"))) {
+                String query1 = "select * from users";
                 try {
                     Statement statement = connection.getConnection().createStatement();
-                    ResultSet resultSet = statement.executeQuery(query);
+                    ResultSet resultSet = statement.executeQuery(query1);
                     while (resultSet.next()) {
                         User users = new User();
                         users.setId(resultSet.getInt(1));
@@ -43,7 +46,10 @@ public class VerificationLogin {
                         users.setPassword(resultSet.getString(3));
                         System.out.println(users);
                     }
-                } catch (SQLException e) {throw new RuntimeException(e);}}
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             Main.coconut = false;
         }
         else {System.out.print("Неверные данные либо ваш аккаунт не существует\n");}
