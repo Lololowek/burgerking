@@ -7,11 +7,13 @@ import java.util.Scanner;
 
 public class Main {
     public static boolean coconut;
+    public static boolean coconut2;
     public static int token;
 
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         coconut = true;
+        coconut2 = true;
         while (coconut) {
             System.out.print("Добро пожаловать!\n");
             System.out.print("1) Войти\n");
@@ -27,21 +29,23 @@ public class Main {
                     break;
             }
         }
-        System.out.print("Личный кабинет\n");
-        System.out.print("1) На очереди\n");
-        System.out.print("2) Просмотренно\n");
-        System.out.print("3) Смотреть\n");
-        int choice = scanner.nextInt();
-        switch(choice){
-            case 1:
-                new wishlist().Wish(scanner);
-                break;
-            case 2:
-                new watched().Watched(scanner);
-                break;
-            case 3:
-                new library().Lib(scanner);
-                break;
+        while(coconut2){
+            System.out.print("Личный кабинет\n");
+            System.out.print("1) На очереди\n");
+            System.out.print("2) Просмотренно\n");
+            System.out.print("3) Смотреть\n");
+            int choice = scanner.nextInt();
+            switch(choice) {
+                case 1:
+                    new wishlist().Wish(scanner);
+                    break;
+                case 2:
+                    new watched().Watch(scanner);
+                    break;
+                case 3:
+                    new library().Lib(scanner);
+                    break;
+            }
         }
     }
 }

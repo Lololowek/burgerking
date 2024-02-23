@@ -36,7 +36,6 @@ public class wishlist {
                     break;
                 case 4:
                     wishl = false;
-                    break;
             }
         }
     }

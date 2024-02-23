@@ -7,8 +7,8 @@ import java.sql.*;
 import java.util.*;
 
 public class VerificationReg {
-    Connection connection = new Connection();
     public void RegProcess(Scanner scanner) {
+        Connection connection = new Connection();
         scanner.nextLine();
         System.out.print("Логин:\n ");
         String Login = scanner.nextLine();
@@ -27,10 +27,13 @@ public class VerificationReg {
         }
         if (isUserExist) {
             System.out.print("Аккаунт с таким логином уже существует\n");
-        } else {
-            try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)")) {
-                preparedStatement.setString(1, Login);
-                preparedStatement.setString(2, Password);
+        }
+        else {
+            try (PreparedStatement reg = connection.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)"))
+            {
+                System.out.print(Login + " " + Password + " ");
+                reg.setString(1, Login);
+                reg.setString(2, Password);
                 System.out.println("Аккаунт создан.");
             }
             catch (SQLException e) {
