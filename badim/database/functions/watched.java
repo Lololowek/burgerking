@@ -47,14 +47,16 @@ public class watched {
         }
     }
     private static void print(Connection connection) throws SQLException {
-        String query = "SELECT 4 FROM watched";
-        try (Statement statement = connection.getConnection().createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while(resultSet.next()) {
-                System.out.println("\nID: " + resultSet.getInt("fid") +
-                        ", Название: " + resultSet.getString("name") +
-                        ", Автор: " + resultSet.getString("author") +
-                        ", Год: " + resultSet.getInt("year"));
+        String query = "SELECT * FROM watched where uid = ?";
+        try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query)) {
+            preparedStatement.setInt(1, Main.token);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while(resultSet.next()) {
+                    System.out.println("\nID: " + resultSet.getInt("fid") +
+                            ", Название: " + resultSet.getString("name") +
+                            ", Автор: " + resultSet.getString("author") +
+                            ", Год: " + resultSet.getInt("year"));
+                }
             }
         }
     }

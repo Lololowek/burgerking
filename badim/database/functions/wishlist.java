@@ -10,14 +10,16 @@ public class wishlist {
     public void Wish(Scanner scanner) throws SQLException {
         boolean wishl = true;
         scanner.nextLine();
-        int fid;
+        int fid; String name;
         while(wishl){
         Connection connection = new Connection();
         System.out.print("Wishlist\n");
         System.out.print("1) Посмотреть список\n");
         System.out.print("2) Добавить по id\n");
-        System.out.print("3) Удалить из списка по id\n");
-        System.out.print("4) Вернуться\n");
+        System.out.print("3) Добавить по названию\n");
+        System.out.print("4) Удалить из списка по id\n");
+        System.out.print("5) Удалить из списка по названию\n");
+        System.out.print("6) Вернуться\n");
         int choice = scanner.nextInt();
             switch(choice) {
                 case 1:
@@ -29,11 +31,28 @@ public class wishlist {
                     add(connection, fid);
                     break;
                 case 3:
+                    System.out.print("name: \n");
+                    scanner.nextLine();
+                    name = scanner.nextLine();
+                    printname(connection,name, choice);
+                    System.out.print("id: ");
+                    fid = scanner.nextInt();
+                    add(connection, fid);
+                    break;
+                case 4:
                     System.out.print("id: ");
                     fid = scanner.nextInt();
                     delete(connection,fid);
                     break;
-                case 4:
+                case 5:
+                    System.out.print("name: \n");
+                    scanner.nextLine();
+                    name = scanner.nextLine();
+                    printname(connection,name, choice);
+                    fid = scanner.nextInt();
+                    delete(connection,fid);
+                    break;
+                case 6:
                     wishl = false;
             }
         }
@@ -52,6 +71,38 @@ public class wishlist {
             }
         }
     }
+
+    private static void printname(Connection connection, String name, int choice) throws SQLException {
+        switch(choice) {
+            case 3:
+                String query3 = "SELECT * FROM films where name = ?";
+                try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query3)) {
+                    preparedStatement.setString(1, name);
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            System.out.println("\nID: " + resultSet.getInt("fid") +
+                                    ", Название: " + resultSet.getString("name") +
+                                    ", Автор: " + resultSet.getString("author") +
+                                    ", Год: " + resultSet.getInt("year"));
+                        }
+                    }
+                }
+            case 5:
+                String query5 = "SELECT * FROM wishlist where name = ?";
+                try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query5)) {
+                    preparedStatement.setString(1, name);
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            System.out.println("\nID: " + resultSet.getInt("fid") +
+                                    ", Название: " + resultSet.getString("name") +
+                                    ", Автор: " + resultSet.getString("author") +
+                                    ", Год: " + resultSet.getInt("year"));
+                        }
+                    }
+                }
+        }
+    }
+
 
     private static void add(Connection connection, int fid) throws SQLException {
         String name = null;String author = null; int year = 0;
@@ -79,6 +130,7 @@ public class wishlist {
                 ps.setString(3, author);
                 ps.setInt(4, year);
                 ps.setInt(5, Main.token);
+                ps.executeUpdate();
         }
         catch (SQLException e) {
             System.out.println("Ошибка при добавлении книги: " + e.getMessage());
@@ -90,7 +142,7 @@ public class wishlist {
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query)) {
             preparedStatement.setInt(1, fid);
             preparedStatement.setInt(2, Main.token);
-            int affectedRows = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
     }
 }

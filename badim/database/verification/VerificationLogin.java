@@ -36,18 +36,23 @@ public class VerificationLogin {
             System.out.println("ВХОД ВЫПОЛНЕН!");
             if ((Objects.equals(Login, "admin")) & (Objects.equals(Password, "admin"))) {
                 String query1 = "select * from users";
-                try {
-                    Statement statement = connection.getConnection().createStatement();
-                    ResultSet resultSet = statement.executeQuery(query1);
-                    while (resultSet.next()) {
-                        User users = new User();
-                        users.setId(resultSet.getInt(1));
-                        users.setLogin(resultSet.getString(2));
-                        users.setPassword(resultSet.getString(3));
-                        System.out.println(users);
+                System.out.println("Вывести всех Users? y/n");
+                String ans = scanner.nextLine();
+                if(Objects.equals(ans, "y")) {
+                    try {
+                        Statement statement = connection.getConnection().createStatement();
+                        ResultSet resultSet = statement.executeQuery(query1);
+                        while (resultSet.next()) {
+                            User users = new User();
+                            users.setId(resultSet.getInt(1));
+                            users.setLogin(resultSet.getString(2));
+                            users.setPassword(resultSet.getString(3));
+
+                            System.out.println(users);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
             }
             Main.coconut = false;

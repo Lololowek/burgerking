@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.*;
 
 public class VerificationReg {
+
     public void RegProcess(Scanner scanner) {
         Connection connection = new Connection();
         scanner.nextLine();
@@ -22,26 +23,28 @@ public class VerificationReg {
                     isUserExist = true;
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.print("чета не то");
         }
         if (isUserExist) {
             System.out.print("Аккаунт с таким логином уже существует\n");
         }
-        else {
-            try (PreparedStatement reg = connection.getConnection().prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)"))
-            {
-                System.out.print(Login + " " + Password + " ");
-                reg.setString(1, Login);
-                reg.setString(2, Password);
-                System.out.println("Аккаунт создан.");
-            }
-            catch (SQLException e) {
-                e.getSQLState();
-                System.out.print("чета не то");
-            }
-            Main.coconut = false;
+        else regg(scanner, Login, Password);
+        Main.coconut = false;
+    }
+
+    private void regg(Scanner scanner, String Login, String Password) {
+        Connection connection = new Connection();
+        String query2 = "INSERT INTO users (login, password) VALUES (?, ?)";
+        try (PreparedStatement reg = connection.getConnection().prepareStatement(query2)) {
+            System.out.print(Login + " " + Password + " ");
+            reg.setString(1, Login);
+            reg.setString(2, Password);
+            reg.executeUpdate();
+            System.out.println("Аккаунт создан.");
+        } catch (SQLException e) {
+            e.getSQLState();
+            System.out.print("чета не то");
         }
     }
 }
